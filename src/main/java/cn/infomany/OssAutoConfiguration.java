@@ -31,7 +31,7 @@ public class OssAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnProperty(prefix = "oss.qiniu", name = "enable", havingValue = "true")
-    public QiNiuClient<DefaultPutRet> getQiNiuClient() {
+    public QiNiuClient getQiNiuClient() {
         return QiNiuClient.defaultBuilder()
                 .accessKey(qiNiuProperties.getAccessKey())
                 .secretKey(qiNiuProperties.getSecretKey())

@@ -17,11 +17,11 @@ public interface OssService {
     /**
      * 上传文件
      *
-     * @param fileInputStream 文件流
+     * @param inputStream 文件流
      * @param fileName        文件名
      * @return 返回泛型
      */
-    <T> T uploadFile(InputStream fileInputStream, String fileName) throws QiniuException, IOException;
+    <T> T uploadFile(InputStream inputStream, String fileName, Class<T> clazz) throws IOException;
 
     /**
      * 生成文件访问链接

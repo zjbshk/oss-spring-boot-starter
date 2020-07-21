@@ -3,14 +3,13 @@ package cn.infomany.service.impl;
 import cn.infomany.UploadTokenCreate;
 import cn.infomany.beans.FileDetail;
 import cn.infomany.service.QiNiuService;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.BatchStatus;
+import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FetchRet;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
@@ -18,7 +17,6 @@ import com.qiniu.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
@@ -27,7 +25,7 @@ import java.util.Objects;
  * @author zjb
  * @date 2020/7/20
  */
-public class QiNiuClient<T> implements QiNiuService {
+public class QiNiuClient implements QiNiuService {
 
     private UploadTokenCreate uploadTokenCreate;
 
@@ -39,16 +37,17 @@ public class QiNiuClient<T> implements QiNiuService {
     private BucketManager bucketManager;
     private UploadManager uploadManager;
 
+    @Override
+    public DefaultPutRet uploadFile(InputStream inputStream, String fileName) throws QiniuException {
+        return uploadFile(inputStream, fileName, DefaultPutRet.class);
+    }
 
     @Override
-    public T uploadFile(InputStream fileInputStream, String fileName) throws IOException {
+    public <T> T uploadFile(InputStream inputStream, String fileName, Class<T> clazz) throws QiniuException {
         String upToken = uploadTokenCreate.getUploadToken();
         Response response = uploadManager
-                .put(fileInputStream, fileName, upToken, null, null);
-        Type type = new TypeToken<T>() {
-        }.getType();
-        //解析上传成功的结果
-        return new Gson().fromJson(response.bodyString(), type);
+                .put(inputStream, fileName, upToken, null, null);
+        return response.jsonToObject(clazz);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class QiNiuClient<T> implements QiNiuService {
     @Override
     public boolean fileExists(String fileName) throws IOException {
         try {
-            FileInfo stat = bucketManager.stat(bucket, fileName);
+            bucketManager.stat(bucket, fileName);
         } catch (QiniuException e) {
             if (e.code() == 612) {
                 return false;
@@ -95,6 +94,7 @@ public class QiNiuClient<T> implements QiNiuService {
     public boolean deleteFile(String fileName) throws IOException {
         return bucketManager.delete(bucket, fileName).isOK();
     }
+
 
     @Override
     public String createUploadFileToken() {
@@ -181,9 +181,9 @@ public class QiNiuClient<T> implements QiNiuService {
         }
 
 
-        public <T> QiNiuClient<T> build() {
+        public QiNiuClient build() {
             checkMustArgs();
-            QiNiuClient<T> tQiNiuClient = new QiNiuClient<>();
+            QiNiuClient tQiNiuClient = new QiNiuClient();
             // 必要参数同步到tQiNiuClient
             tQiNiuClient.bucket = bucket;
             tQiNiuClient.domain = domain;

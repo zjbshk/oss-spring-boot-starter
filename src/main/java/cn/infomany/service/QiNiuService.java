@@ -3,7 +3,10 @@ package cn.infomany.service;
 import com.qiniu.common.QiniuException;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.model.BatchStatus;
+import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FetchRet;
+
+import java.io.InputStream;
 
 /**
  * 对象存储云接口
@@ -13,6 +16,14 @@ import com.qiniu.storage.model.FetchRet;
  */
 public interface QiNiuService extends OssService {
 
+    /**
+     * 文件上传
+     *
+     * @param inputStream
+     * @param fileName
+     * @return
+     */
+    DefaultPutRet uploadFile(InputStream inputStream, String fileName) throws QiniuException;
 
     /**
      * 生成一个文件上传的token
