@@ -59,15 +59,8 @@ public class QiNiuClient<T> implements QiNiuService<T> {
         if (StringUtils.isNullOrEmpty(fileName)) {
             throw new IllegalArgumentException("fileName为空");
         }
-        String encodedFileName;
-        try {
-            encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.name())
-                    .replace("+", "%20");
-            String publicUrl = String.format("%s/%s", domain, encodedFileName);
-            return auth.privateDownloadUrl(publicUrl, expireInSeconds);
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException("fileName无法进行编码");
-        }
+        String publicUrl = String.format("%s/%s", domain, fileName);
+        return auth.privateDownloadUrl(publicUrl, expireInSeconds);
     }
 
     @Override
