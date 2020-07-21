@@ -205,7 +205,8 @@ public class QiNiuClient<T> implements QiNiuService<T> {
             }
             tQiNiuClient.uploadManager = new UploadManager(cfg);
             tQiNiuClient.bucketManager = new BucketManager(tQiNiuClient.auth, cfg);
-            if (Objects.isNull(cfg)) {
+
+            if (Objects.isNull(uploadTokenCreate)) {
                 uploadTokenCreate = () -> tQiNiuClient.auth.uploadToken(bucket);
             }
             tQiNiuClient.uploadTokenCreate = uploadTokenCreate;
