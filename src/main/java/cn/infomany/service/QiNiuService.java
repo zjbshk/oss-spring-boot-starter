@@ -11,7 +11,7 @@ import com.qiniu.storage.model.FetchRet;
  * @author zjb
  * @date 2020/7/20
  */
-public interface QiNiuService<T> extends OssService<T> {
+public interface QiNiuService extends OssService {
 
 
     /**

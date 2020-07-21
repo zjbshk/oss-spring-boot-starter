@@ -12,7 +12,7 @@ import java.io.InputStream;
  * @author zjb
  * @date 2020/7/20
  */
-public interface OssService<T> {
+public interface OssService {
 
     /**
      * 上传文件
@@ -21,7 +21,7 @@ public interface OssService<T> {
      * @param fileName        文件名
      * @return 返回泛型
      */
-    T uploadFile(InputStream fileInputStream, String fileName) throws QiniuException, IOException;
+    <T> T uploadFile(InputStream fileInputStream, String fileName) throws QiniuException, IOException;
 
     /**
      * 生成文件访问链接

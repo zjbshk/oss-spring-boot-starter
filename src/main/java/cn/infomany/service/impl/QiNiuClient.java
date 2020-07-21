@@ -18,10 +18,7 @@ import com.qiniu.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
@@ -30,7 +27,7 @@ import java.util.Objects;
  * @author zjb
  * @date 2020/7/20
  */
-public class QiNiuClient<T> implements QiNiuService<T> {
+public class QiNiuClient<T> implements QiNiuService {
 
     private UploadTokenCreate uploadTokenCreate;
 
