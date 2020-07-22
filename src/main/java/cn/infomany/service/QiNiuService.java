@@ -68,8 +68,6 @@ public interface QiNiuService extends OssService {
     }
 
 
-    boolean copyFileName(String srcFileName, String targetFileName, boolean force) throws QiniuException;
-
     /**
      * 从远程Url中获取文件并保存
      *

@@ -2,8 +2,8 @@ package cn.infomany;
 
 import cn.infomany.props.OssProperties;
 import cn.infomany.props.QiNiuProperties;
-import cn.infomany.service.impl.QiNiuClient;
-import com.qiniu.storage.model.DefaultPutRet;
+import cn.infomany.service.impl.qiniu.QiNiuClient;
+import cn.infomany.service.impl.qiniu.QiNiuOssClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

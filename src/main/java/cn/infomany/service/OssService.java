@@ -18,7 +18,7 @@ public interface OssService {
      * 上传文件
      *
      * @param inputStream 文件流
-     * @param fileName        文件名
+     * @param fileName    文件名
      * @return 返回泛型
      */
     <T> T uploadFile(InputStream inputStream, String fileName, Class<T> clazz) throws IOException;
@@ -60,10 +60,22 @@ public interface OssService {
      *
      * @param srcFileName    源文件名
      * @param targetFileName 目标文件名
+     * @param force          是否强制覆盖
+     * @return
+     */
+    default boolean changeFileName(String srcFileName, String targetFileName, boolean force) throws IOException {
+        throw new UnsupportedOperationException("该方法未实现");
+    }
+
+    /**
+     * 修改指定文件名称（默认不覆盖）
+     *
+     * @param srcFileName    源文件名
+     * @param targetFileName 目标文件名
      * @return
      */
     default boolean changeFileName(String srcFileName, String targetFileName) throws IOException {
-        throw new UnsupportedOperationException("该方法未实现");
+        return changeFileName(srcFileName, targetFileName, false);
     }
 
     /**
@@ -71,11 +83,22 @@ public interface OssService {
      *
      * @param srcFileName    源文件名
      * @param targetFileName 目标文件名
+     * @param force          是否强制覆盖
      * @return
      */
-    default boolean copyFile(String srcFileName, String targetFileName, boolean force) {
+    default boolean copyFile(String srcFileName, String targetFileName, boolean force) throws IOException {
         throw new UnsupportedOperationException("该方法未实现");
     }
 
 
+    /**
+     * 复制文件(默认不覆盖)
+     *
+     * @param srcFileName    源文件名
+     * @param targetFileName 目标文件名
+     * @return
+     */
+    default boolean copyFile(String srcFileName, String targetFileName) throws IOException {
+        return copyFile(srcFileName, targetFileName, false);
+    }
 }
