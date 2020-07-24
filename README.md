@@ -10,7 +10,6 @@
 package cn.infomany.service;
 
 import cn.infomany.beans.FileDetail;
-import com.qiniu.common.QiniuException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +26,7 @@ public interface OssService {
      * 上传文件
      *
      * @param inputStream 文件流
-     * @param fileName        文件名
+     * @param fileName    文件名
      * @return 返回泛型
      */
     <T> T uploadFile(InputStream inputStream, String fileName, Class<T> clazz) throws IOException;
@@ -46,7 +45,7 @@ public interface OssService {
      * @param fileName 文件名
      * @return 文件信息对象
      */
-    FileDetail getFileInfo(String fileName) throws QiniuException, IOException;
+    FileDetail getFileInfo(String fileName) throws IOException;
 
     /**
      * 判断文件是否存在
@@ -62,17 +61,29 @@ public interface OssService {
      * @param fileName 文件名
      * @return
      */
-    boolean deleteFile(String fileName) throws QiniuException, IOException;
+    boolean deleteFile(String fileName) throws IOException;
 
     /**
      * 修改指定文件名称
      *
      * @param srcFileName    源文件名
      * @param targetFileName 目标文件名
+     * @param force          是否强制覆盖
+     * @return
+     */
+    default boolean changeFileName(String srcFileName, String targetFileName, boolean force) throws IOException {
+        throw new UnsupportedOperationException("该方法未实现");
+    }
+
+    /**
+     * 修改指定文件名称（默认不覆盖）
+     *
+     * @param srcFileName    源文件名
+     * @param targetFileName 目标文件名
      * @return
      */
     default boolean changeFileName(String srcFileName, String targetFileName) throws IOException {
-        throw new UnsupportedOperationException("该方法未实现");
+        return changeFileName(srcFileName, targetFileName, false);
     }
 
     /**
@@ -80,12 +91,24 @@ public interface OssService {
      *
      * @param srcFileName    源文件名
      * @param targetFileName 目标文件名
+     * @param force          是否强制覆盖
      * @return
      */
-    default boolean copyFile(String srcFileName, String targetFileName, boolean force) {
+    default boolean copyFile(String srcFileName, String targetFileName, boolean force) throws IOException {
         throw new UnsupportedOperationException("该方法未实现");
     }
 
+
+    /**
+     * 复制文件(默认不覆盖)
+     *
+     * @param srcFileName    源文件名
+     * @param targetFileName 目标文件名
+     * @return
+     */
+    default boolean copyFile(String srcFileName, String targetFileName) throws IOException {
+        return copyFile(srcFileName, targetFileName, false);
+    }
 }
 ```
 
@@ -161,8 +184,6 @@ public interface QiNiuService extends OssService {
         throw new UnsupportedOperationException("该方法未实现");
     }
 
-
-    boolean copyFileName(String srcFileName, String targetFileName, boolean force) throws QiniuException;
 
     /**
      * 从远程Url中获取文件并保存
