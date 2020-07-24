@@ -1,7 +1,6 @@
 package cn.infomany.service;
 
 import cn.infomany.beans.FileDetail;
-import com.qiniu.common.QiniuException;
 
 import java.io.IOException;
 import java.io.InputStream;

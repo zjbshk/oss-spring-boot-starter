@@ -118,4 +118,36 @@ public class MinIoOssClient implements OssService {
             throw new IOException(e.getMessage());
         }
     }
+
+    /**
+     * 该实现中通过了三次访问文件服务器实现，实现不太安全，
+     * 如果不是业务需要，不要轻易使用
+     *
+     * @param srcFileName    源文件名
+     * @param targetFileName 目标文件名
+     * @param force          是否强制覆盖
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public boolean changeFileName(String srcFileName, String targetFileName, boolean force) throws IOException {
+        try {
+            InputStream srcIS = minioClient.getObject(bucket, srcFileName);
+            minioClient.putObject(bucket, targetFileName, srcIS,
+                    new PutObjectOptions(-1L, PutObjectOptions.MIN_MULTIPART_SIZE));
+            minioClient.removeObject(bucket, srcFileName);
+            return true;
+        } catch (ErrorResponseException |
+                InsufficientDataException |
+                InternalException |
+                InvalidBucketNameException |
+                InvalidKeyException |
+                InvalidResponseException |
+                NoSuchAlgorithmException |
+                XmlParserException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 }
