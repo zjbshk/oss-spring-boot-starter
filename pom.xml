@@ -17,6 +17,7 @@
         <io.version>2.4</io.version>
         <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <minio.version>7.0.2</minio.version>
     </properties>
 
 
@@ -64,6 +65,13 @@
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
             <version>${qiniu.version}</version>
+        </dependency>
+
+        <!--    minIO  -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
         </dependency>
 
         <!-- 支持 @ConfigurationProperties 注解 -->

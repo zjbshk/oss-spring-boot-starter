@@ -37,7 +37,7 @@ public interface OssService {
      * @param fileName 文件名
      * @return 文件信息对象
      */
-    FileDetail getFileInfo(String fileName) throws QiniuException, IOException;
+    FileDetail getFileInfo(String fileName) throws IOException;
 
     /**
      * 判断文件是否存在
@@ -53,7 +53,7 @@ public interface OssService {
      * @param fileName 文件名
      * @return
      */
-    boolean deleteFile(String fileName) throws QiniuException, IOException;
+    boolean deleteFile(String fileName) throws IOException;
 
     /**
      * 修改指定文件名称
