@@ -46,7 +46,7 @@ public class QiNiuOssClient implements OssService {
         if (StringUtils.isNullOrEmpty(fileName)) {
             throw new IllegalArgumentException("fileName为空");
         }
-        String publicUrl = String.format("%s/%s", domain, fileName);
+        String publicUrl = String.format("http://%s/%s", domain, fileName);
         return auth.privateDownloadUrl(publicUrl, expireInSeconds);
     }
 
