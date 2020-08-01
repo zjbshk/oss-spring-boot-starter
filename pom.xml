@@ -20,6 +20,13 @@
         <minio.version>7.0.2</minio.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>芳园天伦仓库</name>
+            <url>https://maven.pkg.github.com/zjbshk/fytlun</url>
+        </repository>
+    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
